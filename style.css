@@ -1,0 +1,468 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, "Noto Sans Thai", sans-serif;
+  background: #fff9fb;
+  color: #393338;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* LOGIN */
+
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-box {
+  width: 390px;
+  max-width: 100%;
+  background: white;
+  border: 1px solid #eadfe4;
+  border-radius: 14px;
+  padding: 32px;
+  box-shadow: 0 5px 20px rgba(80,50,60,.06);
+}
+
+.book-icon {
+  width: 55px;
+  height: 55px;
+  background: #fff0f4;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+}
+
+.login-box h1 {
+  margin: 18px 0 5px;
+  font-size: 25px;
+}
+
+.login-box > p {
+  margin: 0 0 25px;
+  color: #999;
+  font-size: 13px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  margin: 14px 0 6px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ddd5da;
+  border-radius: 7px;
+  background: white;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #d88ba4;
+}
+
+.main-btn {
+  width: 100%;
+  border: 0;
+  background: #d985a0;
+  color: white;
+  padding: 11px;
+  border-radius: 7px;
+  margin-top: 18px;
+}
+
+.switch {
+  text-align: center;
+  margin-top: 18px;
+  color: #999;
+  font-size: 12px;
+}
+
+.switch button {
+  border: 0;
+  background: none;
+  color: #c96787;
+}
+
+.error {
+  color: #d45d78;
+  font-size: 12px;
+  min-height: 15px;
+  margin-top: 8px;
+}
+
+
+/* HEADER */
+
+header {
+  height: 70px;
+  background: white;
+  border-bottom: 1px solid #eee3e7;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 7%;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-left > span {
+  font-size: 25px;
+}
+
+.header-left h1 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.header-left small {
+  color: #aaa;
+  font-size: 10px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 12px;
+}
+
+.header-right button {
+  border: 1px solid #ddd;
+  background: white;
+  padding: 7px 10px;
+  border-radius: 6px;
+  color: #777;
+}
+
+
+/* MAIN */
+
+main {
+  width: 90%;
+  max-width: 950px;
+  margin: auto;
+  padding: 35px 0 70px;
+}
+
+.intro h2 {
+  margin: 0;
+  font-size: 25px;
+}
+
+.intro p {
+  margin: 5px 0 25px;
+  color: #999;
+  font-size: 13px;
+}
+
+
+/* TOP */
+
+.top-area {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: white;
+  border: 1px solid #eadfe4;
+  border-radius: 10px;
+
+  padding: 16px;
+  margin-bottom: 15px;
+}
+
+.top-area b {
+  color: #cf718e;
+  font-size: 22px;
+}
+
+.top-area span {
+  color: #777;
+  font-size: 12px;
+}
+
+.add-btn {
+  border: 0;
+  background: #d985a0;
+  color: white;
+  border-radius: 7px;
+  padding: 10px 15px;
+}
+
+
+/* SEARCH */
+
+.search-area {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.search-area input {
+  flex: 1;
+}
+
+.search-area select {
+  width: 190px;
+}
+
+
+/* SECTION */
+
+section {
+  margin-top: 25px;
+}
+
+section h3 {
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+
+/* TASK */
+
+#taskList,
+#finishedList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.task {
+  background: white;
+  border: 1px solid #eadfe4;
+  border-radius: 9px;
+
+  padding: 14px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.check-btn {
+  width: 22px;
+  height: 22px;
+  border: 1px solid #cfc5ca;
+  background: white;
+  border-radius: 5px;
+  flex-shrink: 0;
+}
+
+.task-info {
+  flex: 1;
+}
+
+.task-info strong {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.task-info small {
+  color: #999;
+  font-size: 10px;
+}
+
+.task-date {
+  color: #777;
+  font-size: 11px;
+}
+
+.task-buttons {
+  display: flex;
+  gap: 5px;
+}
+
+.task-buttons button {
+  border: 1px solid #e4dce0;
+  background: white;
+  border-radius: 5px;
+  padding: 5px 7px;
+  font-size: 11px;
+}
+
+.task-buttons .delete {
+  color: #d0647f;
+}
+
+.finished {
+  background: #fafafa;
+  border: 1px solid #eee;
+  padding: 10px 13px;
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color: #999;
+}
+
+.finished .check-btn {
+  background: #d795a8;
+  color: white;
+  border-color: #d795a8;
+}
+
+.finished strong {
+  text-decoration: line-through;
+  font-size: 12px;
+}
+
+.empty {
+  background: white;
+  border: 1px dashed #ddd;
+  padding: 25px;
+  text-align: center;
+  color: #aaa;
+  font-size: 12px;
+  border-radius: 8px;
+}
+
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(40,30,35,.35);
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  width: 450px;
+  max-width: 100%;
+
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-head h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.modal-head button {
+  border: 0;
+  background: #f4f1f2;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+textarea {
+  height: 80px;
+  resize: vertical;
+}
+
+.save-btn {
+  width: 100%;
+  border: 0;
+  background: #d985a0;
+  color: white;
+  padding: 11px;
+  border-radius: 7px;
+  margin-top: 18px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  header {
+    padding: 0 15px;
+  }
+
+  main {
+    width: 92%;
+    padding-top: 25px;
+  }
+
+  .header-right span {
+    display: none;
+  }
+
+  .search-area {
+    flex-direction: column;
+  }
+
+  .search-area select {
+    width: 100%;
+  }
+
+  .task-date {
+    display: none;
+  }
+
+  .task-buttons button {
+    font-size: 0;
+  }
+
+  .task-buttons button:first-child::after {
+    content: "✏️";
+    font-size: 11px;
+  }
+
+  .task-buttons .delete::after {
+    content: "🗑";
+    font-size: 11px;
+  }
+
+}
