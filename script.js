@@ -23,20 +23,14 @@ function getUser() {
 /* LOGIN / REGISTER */
 
 function showRegister() {
-  document.getElementById("loginArea")
-    .classList.add("hidden");
-
-  document.getElementById("registerArea")
-    .classList.remove("hidden");
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("registerPage").style.display = "flex";
 }
 
 
 function showLogin() {
-  document.getElementById("registerArea")
-    .classList.add("hidden");
-
-  document.getElementById("loginArea")
-    .classList.remove("hidden");
+  document.getElementById("registerPage").style.display = "none";
+  document.getElementById("loginPage").style.display = "flex";
 }
 
 
@@ -53,12 +47,10 @@ function register() {
 
   error.textContent = "";
 
-
   if (!username || !password) {
     error.textContent = "กรอกข้อมูลให้ครบก่อน";
     return;
   }
-
 
   if (
     users.some(
@@ -69,13 +61,11 @@ function register() {
     return;
   }
 
-
   users.push({
     username: username,
     password: password,
     tasks: []
   });
-
 
   saveUsers();
 
@@ -85,7 +75,6 @@ function register() {
     "homeworkCurrentUser",
     username
   );
-
 
   openMain();
 }
@@ -99,7 +88,6 @@ function login() {
   const password =
     document.getElementById("loginPass").value;
 
-
   const user =
     users.find(
       item =>
@@ -107,16 +95,11 @@ function login() {
         item.password === password
     );
 
-
   if (!user) {
-
-    document.getElementById("loginError")
-      .textContent =
+    document.getElementById("loginError").textContent =
       "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
-
     return;
   }
-
 
   currentUsername = username;
 
@@ -124,7 +107,6 @@ function login() {
     "homeworkCurrentUser",
     username
   );
-
 
   openMain();
 }
@@ -138,16 +120,12 @@ function logout() {
     "homeworkCurrentUser"
   );
 
-
-  document.getElementById("mainPage")
-    .classList.add("hidden");
-
-  document.getElementById("loginPage")
-    .classList.remove("hidden");
+  document.getElementById("mainPage").style.display = "none";
+  document.getElementById("loginPage").style.display = "flex";
 }
 
 
-/* OPEN PAGE */
+/* OPEN MAIN */
 
 function openMain() {
 
@@ -155,18 +133,12 @@ function openMain() {
 
   if (!user) return;
 
+  document.getElementById("loginPage").style.display = "none";
+  document.getElementById("registerPage").style.display = "none";
+  document.getElementById("mainPage").style.display = "block";
 
-  document.getElementById("loginPage")
-    .classList.add("hidden");
-
-  document.getElementById("mainPage")
-    .classList.remove("hidden");
-
-
-  document.getElementById("currentUser")
-    .textContent =
+  document.getElementById("currentUser").textContent =
     "👤 " + user.username;
-
 
   showTasks();
 }
@@ -180,120 +152,96 @@ function openAdd() {
 
   document.getElementById("editId").value = "";
 
-  document.getElementById("modalTitle")
-    .textContent = "เพิ่มงาน";
+  document.getElementById("modalTitle").textContent =
+    "เพิ่มงาน";
 
-
-  document.getElementById("taskModal")
-    .classList.add("show");
+  document.getElementById("taskModal").classList.add("show");
 }
 
 
 function closeModal() {
 
-  document.getElementById("taskModal")
-    .classList.remove("show");
+  document.getElementById("taskModal").classList.remove("show");
 }
 
 
 /* SAVE TASK */
 
-document.addEventListener(
-  "DOMContentLoaded",
-  function() {
+function init() {
 
-    const form =
-      document.getElementById("taskForm");
+  const form =
+    document.getElementById("taskForm");
 
+  if (form) {
 
-    form.addEventListener(
-      "submit",
-      function(event) {
+    form.addEventListener("submit", function(event) {
 
-        event.preventDefault();
+      event.preventDefault();
 
+      const user = getUser();
 
-        const user = getUser();
+      if (!user) return;
 
-        if (!user) return;
+      const name =
+        document.getElementById("taskName").value.trim();
 
+      const subject =
+        document.getElementById("taskSubject").value;
 
-        const name =
-          document.getElementById("taskName")
-            .value.trim();
+      const date =
+        document.getElementById("taskDate").value;
 
-        const subject =
-          document.getElementById("taskSubject")
-            .value;
+      const detail =
+        document.getElementById("taskDetail").value.trim();
 
-        const date =
-          document.getElementById("taskDate")
-            .value;
+      const editId =
+        document.getElementById("editId").value;
 
-        const detail =
-          document.getElementById("taskDetail")
-            .value.trim();
+      if (editId) {
 
-        const editId =
-          document.getElementById("editId")
-            .value;
+        const task =
+          user.tasks.find(
+            item => item.id === Number(editId)
+          );
 
-
-        if (editId) {
-
-          const task =
-            user.tasks.find(
-              item =>
-                item.id === Number(editId)
-            );
-
-
-          if (task) {
-
-            task.name = name;
-            task.subject = subject;
-            task.date = date;
-            task.detail = detail;
-
-          }
-
-        } else {
-
-          user.tasks.push({
-
-            id: Date.now(),
-
-            name: name,
-
-            subject: subject,
-
-            date: date,
-
-            detail: detail,
-
-            done: false
-
-          });
-
+        if (task) {
+          task.name = name;
+          task.subject = subject;
+          task.date = date;
+          task.detail = detail;
         }
 
+      } else {
 
-        saveUsers();
-
-        showTasks();
-
-        closeModal();
+        user.tasks.push({
+          id: Date.now(),
+          name: name,
+          subject: subject,
+          date: date,
+          detail: detail,
+          done: false
+        });
 
       }
-    );
 
+      saveUsers();
+      showTasks();
+      closeModal();
 
-    if (currentUsername) {
-      openMain();
-    }
-
+    });
   }
-);
+
+  if (currentUsername) {
+    openMain();
+  }
+}
+
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", init);
+} else {
+  init();
+}
 
 
 /* SHOW TASKS */
@@ -304,15 +252,12 @@ function showTasks() {
 
   if (!user) return;
 
-
   const search =
     document.getElementById("searchInput")
       .value.toLowerCase();
 
   const subject =
-    document.getElementById("subjectFilter")
-      .value;
-
+    document.getElementById("subjectFilter").value;
 
   let tasks =
     user.tasks.filter(task => {
@@ -322,37 +267,23 @@ function showTasks() {
           .toLowerCase()
           .includes(search);
 
-
       const correctSubject =
-        subject === "ทั้งหมด" ||
+        subject === "" ||
         task.subject === subject;
 
-
       return found && correctSubject;
-
     });
 
-
   const unfinished =
-    tasks.filter(
-      task => !task.done
-    );
+    tasks.filter(task => !task.done);
 
   const finished =
-    tasks.filter(
-      task => task.done
-    );
+    tasks.filter(task => task.done);
 
-
-  document.getElementById("workCount")
-    .textContent =
-    user.tasks.filter(
-      task => !task.done
-    ).length;
-
+  document.getElementById("workCount").textContent =
+    user.tasks.filter(task => !task.done).length;
 
   showUnfinished(unfinished);
-
   showFinished(finished);
 }
 
@@ -363,7 +294,6 @@ function showUnfinished(tasks) {
 
   const list =
     document.getElementById("taskList");
-
 
   if (tasks.length === 0) {
 
@@ -376,52 +306,48 @@ function showUnfinished(tasks) {
     return;
   }
 
-
   list.innerHTML =
-    tasks.map(
-      task => `
+    tasks.map(task => `
 
-        <div class="task">
+      <div class="task">
 
-          <button
-            class="check-btn"
-            onclick="finishTask(${task.id})">
-          </button>
+        <button
+          class="check-btn"
+          onclick="finishTask(${task.id})">
+        </button>
 
-          <div class="task-info">
+        <div class="task-info">
 
-            <strong>
-              ${safe(task.name)}
-            </strong>
+          <strong>
+            ${safe(task.name)}
+          </strong>
 
-            <small>
-              ${safe(task.subject)}
-              •
-              ส่ง ${formatDate(task.date)}
-            </small>
-
-          </div>
-
-
-          <div class="task-buttons">
-
-            <button
-              onclick="editTask(${task.id})">
-              ✏️
-            </button>
-
-            <button
-              class="delete"
-              onclick="deleteTask(${task.id})">
-              🗑️
-            </button>
-
-          </div>
+          <small>
+            ${safe(task.subject)}
+            •
+            ส่ง ${formatDate(task.date)}
+          </small>
 
         </div>
 
-      `
-    ).join("");
+        <div class="task-buttons">
+
+          <button
+            onclick="editTask(${task.id})">
+            ✏️
+          </button>
+
+          <button
+            class="delete"
+            onclick="deleteTask(${task.id})">
+            🗑️
+          </button>
+
+        </div>
+
+      </div>
+
+    `).join("");
 }
 
 
@@ -431,7 +357,6 @@ function showFinished(tasks) {
 
   const list =
     document.getElementById("finishedList");
-
 
   if (tasks.length === 0) {
 
@@ -444,27 +369,24 @@ function showFinished(tasks) {
     return;
   }
 
-
   list.innerHTML =
-    tasks.map(
-      task => `
+    tasks.map(task => `
 
-        <div class="finished">
+      <div class="finished">
 
-          <button
-            class="check-btn"
-            onclick="finishTask(${task.id})">
-            ✓
-          </button>
+        <button
+          class="check-btn"
+          onclick="finishTask(${task.id})">
+          ✓
+        </button>
 
-          <strong>
-            ${safe(task.name)}
-          </strong>
+        <strong>
+          ${safe(task.name)}
+        </strong>
 
-        </div>
+      </div>
 
-      `
-    ).join("");
+    `).join("");
 }
 
 
@@ -474,19 +396,18 @@ function finishTask(id) {
 
   const user = getUser();
 
+  if (!user) return;
+
   const task =
     user.tasks.find(
       item => item.id === id
     );
 
-
   if (!task) return;
-
 
   task.done = !task.done;
 
   saveUsers();
-
   showTasks();
 }
 
@@ -497,37 +418,33 @@ function editTask(id) {
 
   const user = getUser();
 
+  if (!user) return;
+
   const task =
     user.tasks.find(
       item => item.id === id
     );
 
-
   if (!task) return;
 
+  document.getElementById("editId").value = task.id;
 
-  document.getElementById("editId")
-    .value = task.id;
+  document.getElementById("taskName").value =
+    task.name;
 
-  document.getElementById("taskName")
-    .value = task.name;
+  document.getElementById("taskSubject").value =
+    task.subject;
 
-  document.getElementById("taskSubject")
-    .value = task.subject;
+  document.getElementById("taskDate").value =
+    task.date;
 
-  document.getElementById("taskDate")
-    .value = task.date;
+  document.getElementById("taskDetail").value =
+    task.detail || "";
 
-  document.getElementById("taskDetail")
-    .value = task.detail || "";
+  document.getElementById("modalTitle").textContent =
+    "แก้ไขงาน";
 
-
-  document.getElementById("modalTitle")
-    .textContent = "แก้ไขงาน";
-
-
-  document.getElementById("taskModal")
-    .classList.add("show");
+  document.getElementById("taskModal").classList.add("show");
 }
 
 
@@ -537,22 +454,19 @@ function deleteTask(id) {
 
   const user = getUser();
 
+  if (!user) return;
 
   const answer =
     confirm("ต้องการลบงานนี้หรือไม่?");
 
-
   if (!answer) return;
-
 
   user.tasks =
     user.tasks.filter(
       task => task.id !== id
     );
 
-
   saveUsers();
-
   showTasks();
 }
 
@@ -563,16 +477,48 @@ function formatDate(date) {
 
   if (!date) return "-";
 
+  const parts = date.split("-");
 
-  return new Date(date)
-    .toLocaleDateString(
-      "th-TH",
-      {
-        day: "numeric",
-        month: "short"
-      }
-    );
+  if (parts.length !== 3) return date;
+
+  return `${Number(parts[2])} ${getThaiMonth(Number(parts[1]))}`;
 }
+
+
+function getThaiMonth(month) {
+
+  const months = [
+    "",
+    "ม.ค.",
+    "ก.พ.",
+    "มี.ค.",
+    "เม.ย.",
+    "พ.ค.",
+    "มิ.ย.",
+    "ก.ค.",
+    "ส.ค.",
+    "ก.ย.",
+    "ต.ค.",
+    "พ.ย.",
+    "ธ.ค."
+  ];
+
+  return months[month] || "";
+}
+
+
+/* SEARCH / FILTER */
+
+document.addEventListener("input", function(event) {
+
+  if (
+    event.target.id === "searchInput" ||
+    event.target.id === "subjectFilter"
+  ) {
+    showTasks();
+  }
+
+});
 
 
 /* ป้องกันข้อความ HTML แปลก ๆ */
